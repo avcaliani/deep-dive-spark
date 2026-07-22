@@ -1,4 +1,4 @@
-name := "spark-app"
+name := "kwikechain"
 version := "26.07.00"
 
 scalaVersion := "2.13.18"

@@ -20,6 +20,7 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
   private val log               = LoggerFactory.getLogger(getClass)
   private val DATA_BRONZE       = getProperty("data.bronze")
   private val DATA_BRONZE_USERS = getProperty("data.bronze.users")
+  // TODO: Refactor to DATA_SILVER = path to silver only
   private val DATA_SILVER_OK    = getProperty("data.silver.success")
   private val DATA_SILVER_ERR   = getProperty("data.silver.error")
   private val DATA_SILVER_DBG   = getProperty("data.silver.debug")
@@ -57,6 +58,7 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val dfOk        = transactions.filter($"is_valid")
     val dfErr       = transactions.filter(not($"is_valid"))
 
+    // TODO: Refactor to DATA_SILVER/ = path to silver only
     fs.writeDelta(DATA_SILVER_OK, dfOk.drop(dropColumns: _*), CLUSTER_BY)
     fs.writeDelta(DATA_SILVER_ERR, dfErr.drop(dropColumns: _*), CLUSTER_BY)
     fs.writeDelta(DATA_SILVER_DBG, transactions, CLUSTER_BY)
