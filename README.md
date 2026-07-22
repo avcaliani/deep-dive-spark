@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⭐️ Kwik-E-Chain
+# Kwik-E-Chain
 
 ![kiwi](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjlzNjk1dnNmMmZwbzFpbHhhenpkZWhrb2ZtenZtaHh6cnZvYzYyaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fUybjF7qgWu5y/giphy.gif)
 

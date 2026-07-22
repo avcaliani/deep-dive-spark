@@ -31,12 +31,15 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
         $"currency",
         $"fee_cents".cast("long")
       )
+    log.info(f"Input count: ${transactions.count()}%,d")
 
     val users = fs.read(s"$DATA_BRONZE/users.csv")
       .select($"user_name")
 
     log.debug("Task::Validate")
-    val flaggedTxn = transactions.transform(validate(users))
+    val flaggedTxn = transactions
+        .transform(validate(users))
+        .cache() // Will be written 3 times
 
     log.debug("Task::Write")
     writeOutputs(fs, flaggedTxn)
@@ -44,12 +47,18 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
 
   private def writeOutputs(fs: FSUtil, transactions: DataFrame): Unit = {
     val dropColumns = transactions.columns.filter(_.endsWith("_valid"))
-    val dfOk        = transactions.filter($"is_valid")
-    val dfErr       = transactions.filter(not($"is_valid"))
+    val dfOk        = transactions.filter($"is_valid").drop(dropColumns: _*)
+    val dfErr       = transactions.filter(not($"is_valid")).drop(dropColumns: _*)
 
-    fs.writeDelta(s"$DATA_SILVER/daily-transactions/success", dfOk.drop(dropColumns: _*), CLUSTER_BY)
-    fs.writeDelta(s"$DATA_SILVER/daily-transactions/error", dfErr.drop(dropColumns: _*), CLUSTER_BY)
     fs.writeDelta(s"$DATA_SILVER/daily-transactions/debug", transactions, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/daily-transactions/error", dfErr, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/daily-transactions/success", dfOk, CLUSTER_BY)
+
+    log.info(f"Debug count: ${transactions.count()}%,d")
+    log.info(f"Error count: ${dfErr.count()}%,d")
+    log.info(f"Success count: ${dfOk.count()}%,d")
+    dfOk.printSchema()
+    dfOk.show(5)
   }
 
   private def isPositiveAmount: Column = $"amount_cents" > 0
