@@ -9,15 +9,21 @@ By Anthony Vilarim Caliani
 ![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.2.0-00ADD8)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
-This is my Apache Spark project. Here you will find some stuff that I've done while learning about working with Spark and Scala.
+This is my Apache Spark project.  
+Here you will find some stuff that I've done while learning about working with Spark and Scala.
 
-The dataset is a locally-generated, dependency-free mock "DonutCoin (DONU)" transaction ledger, themed on The Simpsons (same currency/cast as the `kafka-in-docker` project).
+The transaction ledger is a locally-generated mock "DonutCoin (DONU)" dataset, themed on The Simpsons, validated against the same cast/currency reference data used by the `kafka-in-docker` project.
 
 > ℹ️ This is a reference scaffold you clone from to start new Spark/Scala projects, not a maintained showcase.
 
 ## Quick Start
 
 ```sh
+# Download the known-users reference data (kafka-in-docker's Simpsons cast list)
+mkdir -p data/bronze
+curl -o data/bronze/users.csv \
+  https://raw.githubusercontent.com/avcaliani/kafka-in-docker/refs/heads/main/scripts/users.csv
+
 # Build the image
 docker compose build
 
@@ -32,6 +38,14 @@ docker compose exec spark sbt test
 
 # When you're done
 docker compose down
+```
+
+## Formatting
+
+Code formatting (`scalafmt`) runs locally, not inside the container -- requires JDK 21 and sbt installed on your machine:
+
+```sh
+sbt scalafmtAll
 ```
 
 ## Related Links

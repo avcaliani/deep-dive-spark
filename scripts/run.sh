@@ -7,7 +7,7 @@
 # License           : MIT
 #
 # Description       : Generates the mock DonutCoin dataset (if missing) and
-#                     runs "spark-app" through Spark Submit.
+#                     runs "the-kwik-e-chain" through Spark Submit.
 cd "$(dirname "$0")/.."
 
 JAR_DIR="target/scala-*"
@@ -62,6 +62,7 @@ spark-submit \
     --packages "io.delta:delta-spark_2.13:4.2.0" \
     --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
     --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
-    ${jar_file}
+    ${jar_file} \
+    -p daily-transactions "$@"
 
 echo -e "${INFO} Process has been finished \\o/"
