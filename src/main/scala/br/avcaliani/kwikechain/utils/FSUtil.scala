@@ -5,26 +5,10 @@ import org.apache.hadoop.fs.FileSystem
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.slf4j.LoggerFactory
 
-/** File System Util.
-  *
-  * @param spark
-  *   {@link SparkSession} .
-  * @param fs
-  *   {@link FileSystem} .
-  */
 class FSUtil(spark: SparkSession, fs: FileSystem) extends Serializable {
 
   val log = LoggerFactory.getLogger(getClass)
 
-  /** Read file data and put it into a {@link DataFrame} structure.
-    *
-    * @param path
-    *   Entry File Path.
-    * @param delimiter
-    *   Optional Delimiter.
-    * @return
-    *   {@link DataFrame} .
-    */
   def read(path: String, delimiter: String = ","): DataFrame = {
     log.info(s"Reading file '$path'...")
     val df: DataFrame = spark.read
