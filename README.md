@@ -1,7 +1,11 @@
+<div align="center">
+
 # ⭐️ Kwik-E-Chain
 
+![kiwi](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjlzNjk1dnNmMmZwbzFpbHhhenpkZWhrb2ZtenZtaHh6cnZvYzYyaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fUybjF7qgWu5y/giphy.gif)
+
 ![License](https://img.shields.io/github/license/avcaliani/deep-dive-spark?logo=apache&color=lightseagreen)
-![Temurin](https://img.shields.io/badge/Temurin-21-FF7800?logo=eclipseadoptium&logoColor=white)
+![Java](https://img.shields.io/badge/Java-21-FF7800?logo=openjdk&logoColor=white)
 ![Scala](https://img.shields.io/badge/Scala-2.13.18-DC322F?logo=scala&logoColor=white)
 ![sbt](https://img.shields.io/badge/sbt-1.12.1-1B5162)
 ![Spark](https://img.shields.io/badge/Apache--Spark-4.1.1-E25A1C?logo=apachespark&logoColor=white)
@@ -11,8 +15,9 @@
 This is my Apache Spark project.  
 Here you will find some stuff that I've done while learning about working with Spark and Scala.
 
-The app name is "Kwik-E-Chain", riffing on Apu's Kwik-E-Mart and the DonutCoin ledger/chain concept.  
-The transaction ledger is a locally-generated mock "DonutCoin (DONU)" dataset, themed on The Simpsons, validated against the same cast/currency reference data used by the `kafka-in-docker` project.
+The app name is "Kwik-E-Chain", riffing on Apu's Kwik-E-Mart and the DonutCoin `repo:kafka-in-docker`.
+
+</div>
 
 ## Quick Start
 
