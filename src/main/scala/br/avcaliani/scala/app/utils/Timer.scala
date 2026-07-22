@@ -1,4 +1,4 @@
-package br.avcaliani.scala.app.util
+package br.avcaliani.scala.app.utils
 
 /**
  * Simple Timer.

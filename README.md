@@ -1,27 +1,42 @@
 # ⭐️ Spark App
 By Anthony Vilarim Caliani
 
-![License](https://img.shields.io/github/license/avcaliani/aws-app?logo=apache&color=lightseagreen) [![#](https://img.shields.io/badge/open--jdk-1.8.x-red.svg)](#) [![#](https://img.shields.io/badge/scala-2.11.x-mediumvioletred.svg)](#) [![#](https://img.shields.io/badge/apache--spark-2.4.5-darkorange.svg)](#)
+![License](https://img.shields.io/github/license/avcaliani/deep-dive-spark?logo=apache&color=lightseagreen)
+![Temurin](https://img.shields.io/badge/Temurin-21-FF7800?logo=eclipseadoptium&logoColor=white)
+![Scala](https://img.shields.io/badge/Scala-2.13.18-DC322F?logo=scala&logoColor=white)
+![sbt](https://img.shields.io/badge/sbt-1.12.1-1B5162)
+![Spark](https://img.shields.io/badge/Apache--Spark-4.1.1-E25A1C?logo=apachespark&logoColor=white)
+![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.2.0-00ADD8)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
-This is my Apache Spark project. Here you will find some stuff that I've done while I was learning about working with Spark and Scala.
+This is my Apache Spark project. Here you will find some stuff that I've done while learning about working with Spark and Scala.
+
+The dataset is a locally-generated, dependency-free mock "DonutCoin (DONU)" transaction ledger, themed on The Simpsons (same currency/cast as the `kafka-in-docker` project).
+
+> ℹ️ This is a reference scaffold you clone from to start new Spark/Scala projects, not a maintained showcase.
 
 ## Quick Start
 
 ```sh
-# First...
-docker-compose build
+# Build the image
+docker compose build
 
-# Upping the container
-docker-compose up -d
+# Start the container
+docker compose up -d
 
-# And then...
-docker-compose exec spark /app/run.sh
+# Run the job (generates the mock dataset on first run, then builds & runs)
+docker compose exec spark scripts/run.sh
 
-# When you finish, exit from container and...
-docker-compose down
+# Run the tests
+docker compose exec spark sbt test
+
+# When you're done
+docker compose down
 ```
 
 ## Related Links
 - [Apache Spark: Official Website](https://spark.apache.org)
+- [Delta Lake: Official Website](https://delta.io)
 - [SBT Commands](https://alvinalexander.com/scala/sbt-how-to-compile-run-package-scala-project)
-- [Kaggle: User Names Dataset](https://www.kaggle.com/datagov/usa-names)
+
+PS.: This is an unofficial fan project for learning Spark/Scala, not affiliated with or endorsed by Fox/Disney.
