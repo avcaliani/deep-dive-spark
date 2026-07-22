@@ -5,6 +5,10 @@ tmp
 *.class
 *.log
 
+# Data (generated locally / Delta output — gitignored)
+data/bronze/
+data/silver/
+
 # IDEA
 .idea
 *.iml
