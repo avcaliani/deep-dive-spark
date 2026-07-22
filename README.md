@@ -9,7 +9,7 @@
 ![Scala](https://img.shields.io/badge/Scala-2.13.18-DC322F?logo=scala&logoColor=white)
 ![sbt](https://img.shields.io/badge/sbt-1.12.1-1B5162)
 ![Spark](https://img.shields.io/badge/Apache--Spark-4.1.1-E25A1C?logo=apachespark&logoColor=white)
-![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.2.0-00ADD8)
+![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.3.1-00ADD8)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
 This is my Apache Spark project.  
@@ -46,9 +46,13 @@ docker compose down
 <details>
 <summary>Local Development 👇</summary>
 
-Tests and formatting run locally, not inside the container -- requires JDK 21 and sbt installed on your machine:
+Tests and formatting run locally, not inside the container.  
+Requires JDK 21 and sbt installed on your machine.
 
 ```sh
+# Build the project
+sbt clean compile package
+
 # Run the tests
 sbt test
 
