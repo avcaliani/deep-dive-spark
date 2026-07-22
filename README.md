@@ -1,5 +1,4 @@
-# ⭐️ Spark App
-By Anthony Vilarim Caliani
+# ⭐️ Kwik-E-Chain
 
 ![License](https://img.shields.io/github/license/avcaliani/deep-dive-spark?logo=apache&color=lightseagreen)
 ![Temurin](https://img.shields.io/badge/Temurin-21-FF7800?logo=eclipseadoptium&logoColor=white)
@@ -12,9 +11,8 @@ By Anthony Vilarim Caliani
 This is my Apache Spark project.  
 Here you will find some stuff that I've done while learning about working with Spark and Scala.
 
+The app name is "Kwik-E-Chain", riffing on Apu's Kwik-E-Mart and the DonutCoin ledger/chain concept.  
 The transaction ledger is a locally-generated mock "DonutCoin (DONU)" dataset, themed on The Simpsons, validated against the same cast/currency reference data used by the `kafka-in-docker` project.
-
-> ℹ️ This is a reference scaffold you clone from to start new Spark/Scala projects, not a maintained showcase.
 
 ## Quick Start
 
@@ -33,24 +31,30 @@ docker compose up -d
 # Run the job (generates the mock dataset on first run, then builds & runs)
 docker compose exec spark scripts/run.sh
 
-# Run the tests
-docker compose exec spark sbt test
-
 # When you're done
 docker compose down
 ```
 
-## Formatting
+<details>
+<summary>Local Development 👇</summary>
 
-Code formatting (`scalafmt`) runs locally, not inside the container -- requires JDK 21 and sbt installed on your machine:
+Tests and formatting run locally, not inside the container -- requires JDK 21 and sbt installed on your machine:
 
 ```sh
+# Run the tests
+sbt test
+
+# Format the code
 sbt scalafmtAll
 ```
 
+</details>
+
 ## Related Links
+
 - [Apache Spark: Official Website](https://spark.apache.org)
 - [Delta Lake: Official Website](https://delta.io)
 - [SBT Commands](https://alvinalexander.com/scala/sbt-how-to-compile-run-package-scala-project)
+- [kafka-in-docker: Simpsons cast reference data](https://github.com/avcaliani/kafka-in-docker)
 
 PS.: This is an unofficial fan project for learning Spark/Scala, not affiliated with or endorsed by Fox/Disney.
