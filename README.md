@@ -44,6 +44,15 @@ docker compose down
 ```
 
 <details>
+<summary>Pipeline Logs 🎥</summary>
+
+![output](.docs/output.gif)
+
+</details>
+
+<br />
+
+<details>
 <summary>Local Development 👇</summary>
 
 Tests and formatting run locally, not inside the container.  
