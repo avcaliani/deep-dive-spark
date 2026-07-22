@@ -33,7 +33,10 @@ docker compose build
 # Start the container
 docker compose up -d
 
-# Run the job (generates the mock dataset on first run, then builds & runs)
+# Generate the mock DonutCoin transactions dataset
+docker compose exec spark python3 scripts/generate_donu_transactions.py
+
+# Run the job (builds & runs)
 docker compose exec spark scripts/run.sh
 
 # When you're done

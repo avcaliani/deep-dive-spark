@@ -1,17 +1,13 @@
 #!/bin/bash
 #
-# Script Name       : run.sh
-# Author            : Anthony Vilarim Caliani
-# GitHub            : https://github.com/avcaliani
-# Date              : 2020.04.xx (migrated 2026-07)
-# License           : MIT
+# Script Name : run.sh
+# Date        : 2020.04.xx (migrated 2026-07)
+# License     : MIT
 #
-# Description       : Generates the mock DonutCoin dataset (if missing) and
-#                     runs "the-kwik-e-chain" through Spark Submit.
+# Description : Runs "the-kwik-e-chain" through Spark Submit.
 cd "$(dirname "$0")/.."
 
 JAR_DIR="target/scala-*"
-BRONZE_DIR="data/bronze/donu-transactions"
 
 INFO="\033[0;34mINFO\033[00m:"
 ERROR="\033[0;31mERROR\033[00m:"
@@ -44,11 +40,6 @@ echo "
 is_installed "java"
 is_installed "spark-submit"
 is_installed "sbt"
-
-if [ ! -d "${BRONZE_DIR}" ] || [ -z "$(ls -A "${BRONZE_DIR}" 2>/dev/null)" ]; then
-    echo -e "${INFO} No bronze data found at '${BRONZE_DIR}', generating mock DonutCoin transactions..."
-    bash scripts/generate_donu_transactions.sh
-fi
 
 echo -e "${INFO} Building project..."
 sbt clean compile package

@@ -11,12 +11,15 @@ ENV PATH="${SPARK_HOME}/bin:${PATH}"
 
 WORKDIR /opt
 
-# SBT (GitHub Releases -- the official, permanent source)
+# Python
+RUN apt-get update && apt-get install -y --no-install-recommends python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# SBT
 ADD "https://github.com/sbt/sbt/releases/download/v${SBT_VERSION}/sbt-${SBT_VERSION}.tgz" .
 RUN tar -xzf sbt*.tgz && rm -f sbt*.tgz
 
-# Spark (archive.apache.org, not downloads.apache.org -- the latter only
-# mirrors current releases and will 404 once this version is superseded)
+# Spark
 ADD "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" .
 RUN tar -xzf spark*.tgz && rm -f spark*.tgz && mv spark* spark
 
