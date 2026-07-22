@@ -7,32 +7,23 @@ import org.apache.spark.sql.functions.{broadcast, lit, not}
 import org.apache.spark.sql.{Column, DataFrame, SparkSession}
 import org.slf4j.LoggerFactory
 
-/** Reads the DonutCoin (DONU) transaction ledger, validates it, and writes the success/error/debug outputs as clustered
-  * Delta tables.
-  *
-  * @param spark
-  *   {@link SparkSession} .
-  */
+/** Reads the DonutCoin (DONU) transaction ledger, validates it, and writes the success/error/debug outputs */
 case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with Properties {
 
   import spark.implicits._
 
-  private val log               = LoggerFactory.getLogger(getClass)
-  private val DATA_BRONZE       = getProperty("data.bronze")
-  private val DATA_BRONZE_USERS = getProperty("data.bronze.users")
-  // TODO: Refactor to DATA_SILVER = path to silver only
-  private val DATA_SILVER_OK    = getProperty("data.silver.success")
-  private val DATA_SILVER_ERR   = getProperty("data.silver.error")
-  private val DATA_SILVER_DBG   = getProperty("data.silver.debug")
-  private val CLUSTER_BY        = Seq("from_user", "to_user")
+  private val log         = LoggerFactory.getLogger(getClass)
+  private val DATA_BRONZE = getProperty("data.bronze")
+  private val DATA_SILVER = getProperty("data.silver")
+  private val CLUSTER_BY  = Seq("from_user", "to_user")
 
   override def run(): Unit = {
-    
+
     val fs = new FSUtil(spark, FileSystem.get(spark.sparkContext.hadoopConfiguration))
-    
+
     log.debug("Task::Read")
     val transactions = fs
-      .read(DATA_BRONZE)
+      .read(s"$DATA_BRONZE/donu-transactions")
       .select(
         $"transaction_id",
         $"timestamp",
@@ -43,7 +34,7 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
         $"fee_cents".cast("long")
       )
     val users = fs
-      .read(DATA_BRONZE_USERS)
+      .read(s"$DATA_BRONZE/users.csv")
       .select($"user_name")
 
     log.debug("Task::Validate")
@@ -58,10 +49,9 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val dfOk        = transactions.filter($"is_valid")
     val dfErr       = transactions.filter(not($"is_valid"))
 
-    // TODO: Refactor to DATA_SILVER/ = path to silver only
-    fs.writeDelta(DATA_SILVER_OK, dfOk.drop(dropColumns: _*), CLUSTER_BY)
-    fs.writeDelta(DATA_SILVER_ERR, dfErr.drop(dropColumns: _*), CLUSTER_BY)
-    fs.writeDelta(DATA_SILVER_DBG, transactions, CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/daily-transactions/success", dfOk.drop(dropColumns: _*), CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/daily-transactions/error", dfErr.drop(dropColumns: _*), CLUSTER_BY)
+    fs.writeDelta(s"$DATA_SILVER/daily-transactions/debug", transactions, CLUSTER_BY)
   }
 
   private def isPositiveAmount(amountCents: Column): Column = amountCents > 0
@@ -71,13 +61,11 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
   private def isFeeValid(amountCents: Column, feeCents: Column): Column =
     feeCents === (amountCents / lit(20)).cast("long")
 
-  private def withKnownUserFlag(userColumn: String, flagColumn: String, knownUsers: DataFrame)(
-      df: DataFrame
-  ): DataFrame = {
-    val matchColumn = s"__${userColumn}_match"
+  private def withKnownUserFlag(userCol: String, flagCol: String, knownUsers: DataFrame)(df: DataFrame): DataFrame = {
+    val matchColumn = s"__${userCol}_match"
     df
-      .join(knownUsers.withColumnRenamed("user_name", matchColumn), $"$userColumn" === $"$matchColumn", "left")
-      .withColumn(flagColumn, $"$matchColumn".isNotNull)
+      .join(knownUsers.withColumnRenamed("user_name", matchColumn), $"$userCol" === $"$matchColumn", "left")
+      .withColumn(flagCol, $"$matchColumn".isNotNull)
       .drop(matchColumn)
   }
 

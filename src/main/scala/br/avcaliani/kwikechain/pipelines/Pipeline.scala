@@ -1,11 +1,9 @@
 package br.avcaliani.kwikechain.pipelines
 
-/** Pipeline Trait.
-  */
+/** Pipeline Trait */
 trait Pipeline extends Serializable {
 
-  /** Run the pipeline.
-    */
+  /** Run the pipeline */
   def run(): Unit
 
 }
