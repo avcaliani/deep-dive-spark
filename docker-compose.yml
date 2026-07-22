@@ -1,11 +1,10 @@
-version: '3'
 services:
   spark:
     user: root
-    container_name: spark
+    container_name: spark-local
     build:
       context: .
-    image: apache-spark
+    image: spark-local
     working_dir: /app
     volumes:
       - .:/app
