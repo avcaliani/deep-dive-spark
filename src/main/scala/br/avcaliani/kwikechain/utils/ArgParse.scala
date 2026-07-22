@@ -9,8 +9,6 @@ object ArgParse {
         case Array("-p", name)         => name
         case Array("--pipeline", name) => name
       }
-      .getOrElse(
-        throw new IllegalArgumentException("Missing required argument -p | --pipeline.")
-      )
+      .getOrElse(throw new IllegalArgumentException("Missing required argument -p | --pipeline."))
 
 }

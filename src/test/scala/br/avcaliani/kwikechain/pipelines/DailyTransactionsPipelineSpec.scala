@@ -1,17 +1,8 @@
 package br.avcaliani.kwikechain.pipelines
 
-import org.apache.spark.sql.SparkSession
-import org.scalatest.BeforeAndAfterAll
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
+import br.avcaliani.kwikechain.utils.SparkSpec
 
-class DailyTransactionsPipelineSpec extends AnyFlatSpec with Matchers with BeforeAndAfterAll {
-
-  private val spark = SparkSession
-    .builder()
-    .master("local[1]")
-    .appName("DailyTransactionsPipelineSpec")
-    .getOrCreate()
+class DailyTransactionsPipelineSpec extends SparkSpec {
 
   import spark.implicits._
 
@@ -22,37 +13,25 @@ class DailyTransactionsPipelineSpec extends AnyFlatSpec with Matchers with Befor
     (2, "Bart Simpson")
   ).toDF("user_id", "user_name")
 
-  private def isValid(amountCents: Long, feeCents: Long, fromUser: String, toUser: String): Boolean = {
-    val df = Seq((amountCents, feeCents, fromUser, toUser))
-      .toDF("amount_cents", "fee_cents", "from_user", "to_user")
-    df.transform(pipeline.validate(users)).select("is_valid").as[Boolean].collect().head
-  }
+  "validate" should "flag each transaction scenario correctly" in {
+    val scenarios = Seq(
+      ("accepts a well-formed transaction", 10000L, 500L, "Homer Simpson", "Moe Szyslak", true),
+      ("rejects a negative amount", -10000L, -500L, "Homer Simpson", "Moe Szyslak", false),
+      ("rejects a self-transfer", 10000L, 500L, "Homer Simpson", "Homer Simpson", false),
+      ("rejects an unknown user", 10000L, 500L, "Homer Simpson", "Snowball (Unknown)", false),
+      ("rejects a fee that is not exactly 5%", 10000L, 400L, "Homer Simpson", "Moe Szyslak", false),
+      ("truncating fee division: exact match", 999L, 49L, "Homer Simpson", "Moe Szyslak", true),
+      ("truncating fee division: off by one", 999L, 50L, "Homer Simpson", "Moe Szyslak", false)
+    ).toDF("scenario", "amount_cents", "fee_cents", "from_user", "to_user", "expected_valid")
 
-  "validate" should "accept a well-formed transaction" in {
-    isValid(10000, 500, "Homer Simpson", "Moe Szyslak") shouldBe true
-  }
+    val actual = scenarios
+      .transform(pipeline.validate(users))
+      .select($"scenario", $"is_valid")
 
-  it should "reject a negative amount" in {
-    isValid(-10000, -500, "Homer Simpson", "Moe Szyslak") shouldBe false
+    assertDataFrameEquals(
+      actual,
+      expected = scenarios.select($"scenario", $"expected_valid".as("is_valid"))
+    )
   }
-
-  it should "reject a self-transfer" in {
-    isValid(10000, 500, "Homer Simpson", "Homer Simpson") shouldBe false
-  }
-
-  it should "reject an unknown user" in {
-    isValid(10000, 500, "Homer Simpson", "Snowball (Unknown)") shouldBe false
-  }
-
-  it should "reject a fee that is not exactly 5%" in {
-    isValid(10000, 400, "Homer Simpson", "Moe Szyslak") shouldBe false
-  }
-
-  it should "use integer (truncating) division when computing the expected fee" in {
-    isValid(999, 49, "Homer Simpson", "Moe Szyslak") shouldBe true
-    isValid(999, 50, "Homer Simpson", "Moe Szyslak") shouldBe false
-  }
-
-  override def afterAll(): Unit = spark.stop()
 
 }

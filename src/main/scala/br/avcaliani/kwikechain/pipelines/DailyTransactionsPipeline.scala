@@ -2,7 +2,6 @@ package br.avcaliani.kwikechain.pipelines
 
 import br.avcaliani.kwikechain.utils.FSUtil
 import br.avcaliani.kwikechain.utils.Properties
-import org.apache.hadoop.fs.FileSystem
 import org.apache.spark.sql.functions.{broadcast, lit, not}
 import org.apache.spark.sql.{Column, DataFrame, SparkSession}
 import org.slf4j.LoggerFactory
@@ -19,11 +18,10 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
 
   override def run(): Unit = {
 
-    val fs = new FSUtil(spark, FileSystem.get(spark.sparkContext.hadoopConfiguration))
+    val fs = new FSUtil(spark)
 
     log.debug("Task::Read")
-    val transactions = fs
-      .read(s"$DATA_BRONZE/donu-transactions")
+    val transactions = fs.read(s"$DATA_BRONZE/donu-transactions")
       .select(
         $"transaction_id",
         $"timestamp",
@@ -33,8 +31,8 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
         $"currency",
         $"fee_cents".cast("long")
       )
-    val users = fs
-      .read(s"$DATA_BRONZE/users.csv")
+
+    val users = fs.read(s"$DATA_BRONZE/users.csv")
       .select($"user_name")
 
     log.debug("Task::Validate")
@@ -54,12 +52,11 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     fs.writeDelta(s"$DATA_SILVER/daily-transactions/debug", transactions, CLUSTER_BY)
   }
 
-  private def isPositiveAmount(amountCents: Column): Column = amountCents > 0
+  private def isPositiveAmount: Column = $"amount_cents" > 0
 
-  private def isNotSelfTransfer(fromUser: Column, toUser: Column): Column = fromUser =!= toUser
+  private def isNotSelfTransfer: Column = $"from_user" =!= $"to_user"
 
-  private def isFeeValid(amountCents: Column, feeCents: Column): Column =
-    feeCents === (amountCents / lit(20)).cast("long")
+  private def isFeeValid: Column = $"fee_cents" === ($"amount_cents" / lit(20)).cast("long")
 
   private def withKnownUserFlag(userCol: String, flagCol: String, knownUsers: DataFrame)(df: DataFrame): DataFrame = {
     val matchColumn = s"__${userCol}_match"
@@ -73,11 +70,11 @@ case class DailyTransactionsPipeline(spark: SparkSession) extends Pipeline with 
     val knownUsers = broadcast(users.select($"user_name"))
 
     transactions
-      .withColumn("amount_valid", isPositiveAmount($"amount_cents"))
-      .withColumn("self_transfer_valid", isNotSelfTransfer($"from_user", $"to_user"))
+      .withColumn("amount_valid", isPositiveAmount)
+      .withColumn("self_transfer_valid", isNotSelfTransfer)
       .transform(withKnownUserFlag("from_user", "from_user_valid", knownUsers))
       .transform(withKnownUserFlag("to_user", "to_user_valid", knownUsers))
-      .withColumn("fee_valid", isFeeValid($"amount_cents", $"fee_cents"))
+      .withColumn("fee_valid", isFeeValid)
       .withColumn(
         "is_valid",
         $"amount_valid" &&
