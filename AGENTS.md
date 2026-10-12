@@ -9,17 +9,9 @@ Be terse.
 
 ## Repo Layout
 
-```text
-.
-├── .claude/rules/          spark concepts + scala/pyspark conventions
-├── .docs/                  root readme assets (spark logo)
-├── .github/                pr + issue templates
-├── snippets/               isolated spark experiments, one folder each
-└── pocs/                   self-contained pipelines, own Dockerfile + README
-    ├── README.md           the Kwik-E-Mart universe and the inspiration (read this first)
-    ├── kwik-e-chain/       scala 2.13, sbt, delta: validate + route DonutCoin transactions
-    └── kwik-e-mart/        pyspark, uv, delta: clean + type Kwik-E-Mart daily sales
-```
+Read [`README.md`](README.md) first, it has the file tree.
+The pocs share one universe, explained in [`pocs/README.md`](pocs/README.md).
+Every poc and snippet has its own README with how to run it.
 
 Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs.
 
