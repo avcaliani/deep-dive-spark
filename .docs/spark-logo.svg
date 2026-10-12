@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Apache Spark">
+  <defs>
+    <mask id="cuts" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+      <rect width="512" height="512" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="10" stroke-linecap="round">
+        <path d="M150 292 C210 272 270 252 330 192"/>
+        <path d="M175 342 C245 322 320 292 392 232"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#E25A1C" mask="url(#cuts)">
+    <path stroke="#E25A1C" stroke-width="16" stroke-linejoin="round" d="M300 50 L336 150 L452 118 L388 226 L452 336 L336 304 L300 410 L242 272 L120 226 L242 180 Z"/>
+    <path d="M32 480 C40 380 110 318 214 306 C262 301 292 322 292 322 C250 330 222 352 196 392 C166 438 110 470 32 480 Z"/>
+  </g>
+</svg>
