@@ -32,6 +32,29 @@ spark-submit main.py
 - Libraries can under-declare their dependencies. If an import fails in the venv, `uv add` the missing package
   instead of installing it anywhere else.
 
+## Default project layout (pipelines)
+
+New PySpark pipeline projects follow this shape. Small throwaway scripts can skip the registry and the base class.
+
+```text
+src/                    on pytest's `pythonpath`
+├── main.py             builds the SparkSession, parses `-p/--pipeline`, runs it, stops the session
+├── pipelines/
+│   ├── base.py         `Pipeline(ABC)`: holds `spark`, abstract `run(self) -> None`
+│   ├── __init__.py     `PIPELINES: dict[str, type[Pipeline]]`, kebab-case key = CLI name
+│   └── <domain>/       one module per pipeline
+└── utils/              `file.py` (read/write helpers), `log.py` (logger)
+tests/                  `conftest.py` with the shared Spark fixture
+scripts/                `run.sh` (spark-submit) and the mock data generator
+resources/              `log4j.properties`
+```
+
+- Transform logic lives in `@classmethod`s that take and return a DataFrame (`rename_cols`, `parse_cols`, `data_quality`),
+  chained by a `process` method, so tests call them without running a whole job.
+- The data root comes from the `DATA_PATH` env var and datasets follow `bronze/<domain>/<dataset>`
+  to `silver/<domain>/<dataset>`.
+- Log through `utils.log`, not `print`. `print` and `show()` are fine in throwaway scripts.
+
 ## DataFrame code
 
 - `from pyspark.sql import functions as f`, then `f.col(...)`.
@@ -40,10 +63,17 @@ spark-submit main.py
 - Paths and settings come from arguments or environment variables, never hard-coded.
 - Build the `SparkSession` in one `spark_session()` function and stop it at the end.
 
+## Delta writes
+
+- Normalize the path to absolute first: a relative path starting with `./` breaks Delta's path-based table addressing.
+- New table: `DeltaTable.createOrReplace(spark).addColumns(df.schema).clusterBy(...).location(path).execute()`,
+  then append.
+- Existing table: `DeltaTable.forPath(spark, path).delete()` then append. Do not use `mode('overwrite')`, it rewrites the
+  table definition and silently drops the clustering metadata.
+
 ## Style and tests
 
 - Type hints on every function, small functions, `main()` behind `if __name__ == '__main__':`.
-- Follow the ruff config in the project's `pyproject.toml` and check with `uv run ruff check .`.
-- Tests use a session-scoped local `SparkSession` fixture (`conftest.py`) and `pyspark.testing.assertDataFrameEqual`.
-  Test the transform functions on small in-memory DataFrames, not the full job.
-- Log with the project's logger when it has one. `print` and `show()` are fine in throwaway scripts.
+- Single quotes, line length 120, ruff rules `E, F, I, UP` in the project's `pyproject.toml`. Check with `uv run ruff check .`.
+- Tests use a session-scoped local `SparkSession` fixture (`conftest.py`, `master('local[2]')`) and
+  `pyspark.testing.assertDataFrameEqual`. Test the transform functions on small in-memory DataFrames, not the full job.
