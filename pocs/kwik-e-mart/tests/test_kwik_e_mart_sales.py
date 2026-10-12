@@ -26,7 +26,7 @@ PARSED_SCHEMA = StructType([
 
 def test_rename_cols(spark):
     df = spark.createDataFrame(
-        [('1', 'January 5, 2024', 'Scranton', 'Jim Halpert', 'Acme', 'Copy Paper', '10', '$12.50', '5')],
+        [('1', 'January 5, 2024', 'Springfield', 'Apu', 'Homer Simpson', 'Buzz Cola', '10', '$12.50', '5')],
         ['Sale Id', ' DATE ', 'Branch', 'Salesperson', 'Client', 'Product', 'Quantity', 'Unit Price', 'Discount Pct'],
     )
     result = SalesPipeline.rename_cols(df)
@@ -34,13 +34,13 @@ def test_rename_cols(spark):
 
 @pytest.mark.parametrize('row, expected_row', [
     pytest.param(
-        ('1', 'January 5, 2024', 'Scranton', 'Jim Halpert', 'Acme', 'Copy Paper', '10', '$12.50', '5'),
-        ('1', date(2024, 1, 5), 'Scranton', 'Jim Halpert', 'Acme', 'Copy Paper', 10, 12.50, 5.0),
+        ('1', 'January 5, 2024', 'Springfield', 'Apu', 'Homer Simpson', 'Buzz Cola', '10', '$12.50', '5'),
+        ('1', date(2024, 1, 5), 'Springfield', 'Apu', 'Homer Simpson', 'Buzz Cola', 10, 12.50, 5.0),
         id='clean row',
     ),
     pytest.param(
-        ('2', '', 'Scranton', 'Michael Scott', 'Acme', 'Toner', '-3', '$99.99', '0'),
-        ('2', None, 'Scranton', 'Michael Scott', 'Acme', 'Toner', -3, 99.99, 0.0),
+        ('2', '', 'Springfield', 'Manjula', 'Homer Simpson', 'Duff Beer', '-3', '$99.99', '0'),
+        ('2', None, 'Springfield', 'Manjula', 'Homer Simpson', 'Duff Beer', -3, 99.99, 0.0),
         id='missing date parses to null instead of raising under ANSI mode',
     ),
 ])
@@ -55,25 +55,25 @@ def test_parse_cols(spark, row, expected_row):
     )
 
 
-CLEAN_ROW = ('1', date(2024, 1, 5), 'Scranton', 'Jim Halpert', 'Acme', 'Copy Paper', 10, 12.50, 5.0)
+CLEAN_ROW = ('1', date(2024, 1, 5), 'Springfield', 'Apu', 'Homer Simpson', 'Buzz Cola', 10, 12.50, 5.0)
 
 
 @pytest.mark.parametrize('row, kept', [
     pytest.param(CLEAN_ROW, True, id='clean row'),
     pytest.param(
-        ('2', None, 'Scranton', 'Michael Scott', 'Acme', 'Toner', 5, 99.99, 0.0),
+        ('2', None, 'Springfield', 'Manjula', 'Homer Simpson', 'Duff Beer', 5, 99.99, 0.0),
         False, 
         id='missing date',
     ),
     pytest.param(
-        ('3', date(2024, 1, 6), 'Scranton', None, 'Acme', 'Labels', 2, 5.00, 0.0),
+        ('3', date(2024, 1, 6), 'Springfield', None, 'Homer Simpson', 'Squishee', 2, 5.00, 0.0),
         False, 
         id='missing salesperson',
     ),
     pytest.param(
-        ('4', date(2024, 1, 7), 'Scranton', 'Dwight Schrute', 'Acme', 'Envelopes', -3, 3.00, 0.0),
+        ('4', date(2024, 1, 7), 'Springfield', 'Sanjay', 'Homer Simpson', 'Pink Donuts', -3, 3.00, 0.0),
         False, 
-        id="negative quantity (Michael's prank returns)",
+        id='negative quantity (returns)',
     ),
 ])
 def test_data_quality(spark, row, kept):

@@ -20,21 +20,21 @@ MONTHS = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December',
 ]
-BRANCHES = ['Scranton', 'Stamford', 'Utica', 'Nashua', 'Akron', 'Camden']
+BRANCHES = ['Springfield', 'Shelbyville', 'Capital City', 'Ogdenville', 'North Haverbrook', 'Brockway']
 SALESPEOPLE = [
-    'Dwight Schrute', 'Jim Halpert', 'Andy Bernard', 'Phyllis Vance',
-    'Stanley Hudson', 'Kevin Malone', 'Michael Scott', 'Pam Beesly',
-    'Angela Martin', 'Oscar Martinez',
+    'Apu Nahasapeemapetilon', 'Manjula Nahasapeemapetilon', 'Sanjay Nahasapeemapetilon',
+    'Jimbo Jones', 'Kearney Zzyzwicz', 'Dolph Starbeam', 'Martin Prince',
+    'Nelson Muntz', 'Sherri Mackleberry', 'Uter Zorker',
 ]
 PRODUCTS = [
-    'Copy Paper', 'Cardstock', 'Envelopes', 'Labels', 'Toner',
-    'Binder Clips', 'Sticky Notes', 'Printer Ink',
+    'Buzz Cola', 'Duff Beer', 'Squishee', "Krusty-O's", 'Pink Donuts',
+    'Lard Lad Donuts', 'Radioactive Man Comic', 'Chili Dog',
 ]
 CLIENTS = [
-    'Vance Refrigeration', 'Prince Family Paper', 'Blackbear Landscaping',
-    'Web-A-Sketch', 'W.B. Jones Groceries', 'Cache Cash Register Systems',
-    'Northern Light Paper Co', 'Utica Office Supply', 'Stamford Business Center',
-    'Nashua Print & Ship', 'Camden County Schools', 'Akron Rubber Works',
+    'Homer Simpson', 'Marge Simpson', 'Bart Simpson', 'Lisa Simpson', 'Maggie Simpson',
+    'Ned Flanders', 'Milhouse Van Houten', 'Mr. Burns', 'Waylon Smithers', 'Krusty the Clown',
+    'Apu Nahasapeemapetilon', 'Principal Skinner', 'Edna Krabappel', 'Chief Wiggum', 'Ralph Wiggum',
+    'Groundskeeper Willie', 'Comic Book Guy', 'Moe Szyslak', 'Lenny Leonard', 'Carl Carlson',
 ]
 CSV_HEADER = ['sale_id', 'date', 'branch', 'salesperson', 'client', 'product', 'quantity', 'unit_price', 'discount_pct']
 
