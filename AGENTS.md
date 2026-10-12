@@ -17,7 +17,7 @@ Be terse.
 ├── snippets/               isolated spark experiments, one folder each
 └── pocs/                   self-contained pipelines, own Dockerfile + README
     ├── kwik-e-chain/       scala 2.13, sbt, delta: validate + route DonutCoin transactions
-    └── the-paper-trail/    pyspark, uv, delta: clean + type daily paper sales
+    └── kwik-e-mart/       pyspark, uv, delta: clean + type Kwik-E-Mart daily sales
 ```
 
 Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs.
@@ -31,7 +31,7 @@ Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs
  - test: `docker compose exec spark sbt test` (or `sbt test` locally with JDK 21 + sbt)
  - format: `sbt scalafmtAll`
 
-**pocs/the-paper-trail** (from `pocs/the-paper-trail`, see its README)
+**pocs/kwik-e-mart** (from `pocs/kwik-e-mart`, see its README)
  - docker: `docker compose build && docker compose up -d`
  - data: `docker compose exec app scripts/generate_sales_data.py`
  - run: `docker compose exec app scripts/run.sh`

@@ -22,7 +22,7 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 ├── snippets/                   isolated spark experiments, one folder each
 └── pocs/
     ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions
-    └── the-paper-trail/        pyspark, uv, delta: clean + type daily paper sales
+    └── kwik-e-mart/           pyspark, uv, delta: clean + type Kwik-E-Mart daily sales
 ```
 
 ## How to run
@@ -30,7 +30,7 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 Each poc is self-contained and runs in Docker, see its README:
 
 - [`pocs/kwik-e-chain`](pocs/kwik-e-chain/README.md)
-- [`pocs/the-paper-trail`](pocs/the-paper-trail/README.md)
+- [`pocs/kwik-e-mart`](pocs/kwik-e-mart/README.md)
 
 Experiments are run one by one, see [`snippets/README.md`](snippets/README.md).
 

@@ -22,7 +22,7 @@ Java, Spark, uv, and all Python dependencies are baked into the image at build t
 No manual install step after `up`.
 
 ```bash
-cd pocs/the-paper-trail
+cd pocs/kwik-e-mart
 
 # Build the image
 docker compose build
@@ -48,7 +48,7 @@ docker compose down
 Requires Python 3.12, JDK 21, and [uv](https://docs.astral.sh/uv/) installed locally.
 
 ```bash
-cd pocs/the-paper-trail
+cd pocs/kwik-e-mart
 
 # Install dependencies
 uv sync
