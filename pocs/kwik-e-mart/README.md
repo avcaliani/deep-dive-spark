@@ -1,8 +1,8 @@
-<div align="center">
+# Kwik-E-Mart
 
-![The Paper Trail](.docs/logo.svg)
+> Part of the [pocs](../README.md), set in Apu's Kwik-E-Mart. See there for the inspiration and the other poc.
 
-![License](https://img.shields.io/github/license/avcaliani/deep-dive-pyspark?logo=apache&color=lightseagreen)
+![License](https://img.shields.io/github/license/avcaliani/lab-spark?color=green)
 ![Java](https://img.shields.io/badge/Java-21-FF7800?logo=openjdk&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![uv](https://img.shields.io/badge/uv-0.11.29-DE5FE9?logo=astral&logoColor=white)
@@ -10,11 +10,8 @@
 ![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.3.1-00ADD8)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
-In this project you will find some stuff that I've done while learning about working with PySpark.  
-The dataset I'm using is a locally-generated, dependency-free mock of Dunder Mifflin's daily paper sales.  
-Yes, [The Office](https://en.wikipedia.org/wiki/The_Office_(American_TV_series)), I'm a big fan \o/
-
-</div>
+PySpark pipeline that cleans and types the Kwik-E-Mart daily sales.  
+The dataset is a locally-generated, dependency-free mock, nothing to download.
 
 ## Quick Start
 
@@ -39,8 +36,6 @@ docker compose exec app scripts/run.sh
 # When you're done
 docker compose down
 ```
-
-![#output](.docs/output.gif)
 
 <details>
 <summary>Run locally (without Docker) 👇</summary>
@@ -71,5 +66,3 @@ uv run ruff check .
 ```
 
 </details>
-
-PS.: This is an unofficial fan project for learning PySpark, not affiliated with or endorsed by NBC/Universal.

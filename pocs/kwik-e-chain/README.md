@@ -1,10 +1,8 @@
-<div align="center">
-
 # Kwik-E-Chain
 
-![kiwi](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjlzNjk1dnNmMmZwbzFpbHhhenpkZWhrb2ZtenZtaHh6cnZvYzYyaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fUybjF7qgWu5y/giphy.gif)
+> Part of the [pocs](../README.md), set in Apu's Kwik-E-Mart. See there for the inspiration and the other poc.
 
-![License](https://img.shields.io/github/license/avcaliani/deep-dive-spark?logo=apache&color=lightseagreen)
+![License](https://img.shields.io/github/license/avcaliani/lab-spark?color=green)
 ![Java](https://img.shields.io/badge/Java-21-FF7800?logo=openjdk&logoColor=white)
 ![Scala](https://img.shields.io/badge/Scala-2.13.18-DC322F?logo=scala&logoColor=white)
 ![sbt](https://img.shields.io/badge/sbt-1.12.1-1B5162)
@@ -12,12 +10,7 @@
 ![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.3.1-00ADD8)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
-This is my Apache Spark project.  
-Here you will find some stuff that I've done while learning about working with Spark and Scala.
-
-The app name is "Kwik-E-Chain", riffing on Apu's Kwik-E-Mart and the DonutCoin `repo:kafka-in-docker`.
-
-</div>
+Scala and Spark pipeline that validates the DonutCoin (DONU) transaction ledger and routes each row to success, error and debug Delta tables.
 
 ## Quick Start
 
@@ -82,5 +75,3 @@ sbt scalafmtAll
 - [Delta Lake: Official Website](https://delta.io)
 - [SBT Commands](https://alvinalexander.com/scala/sbt-how-to-compile-run-package-scala-project)
 - [kafka-in-docker: Simpsons cast reference data](https://github.com/avcaliani/kafka-in-docker)
-
-PS.: This is an unofficial fan project for learning Spark/Scala, not affiliated with or endorsed by Fox/Disney.
