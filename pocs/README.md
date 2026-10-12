@@ -10,8 +10,8 @@ Self-contained Spark pipelines, one folder each, all set in Apu's Kwik-E-Mart.
 
 ## Inspiration
 
-[Kwik-E-Mart](https://simpsons.fandom.com/wiki/Kwik-E-Mart) is Apu Nahasapeemapetilon's convenience store in Springfield, from The Simpsons.
-Both pocs live in that universe, so their data can be joined later:
+[Kwik-E-Mart](https://simpsons.fandom.com/wiki/Kwik-E-Mart) is Apu Nahasapeemapetilon's convenience store in Springfield, from The Simpsons.  
+Both pocs live in that universe, so their data can be joined later:  
 the users of `kwik-e-chain` are the clients of `kwik-e-mart`.
 
 | Poc | Stack | What it does |
