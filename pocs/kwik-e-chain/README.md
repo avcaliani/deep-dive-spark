@@ -22,6 +22,9 @@ The app name is "Kwik-E-Chain", riffing on Apu's Kwik-E-Mart and the DonutCoin `
 ## Quick Start
 
 ```sh
+# All commands below run from this folder
+cd pocs/kwik-e-chain
+
 # Download the known-users reference data (kafka-in-docker's Simpsons cast list)
 mkdir -p data/bronze
 curl -o data/bronze/users.csv \
@@ -59,6 +62,8 @@ Tests and formatting run locally, not inside the container.
 Requires JDK 21 and sbt installed on your machine.
 
 ```sh
+cd pocs/kwik-e-chain
+
 # Build the project
 sbt clean compile package
 
