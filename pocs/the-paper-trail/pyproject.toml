@@ -1,0 +1,33 @@
+[project]
+name = "deep-dive-pyspark"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "pyspark==4.1.1",
+    "delta-spark==4.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.0.3",
+    "ruff==0.15.22",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+filterwarnings = ["ignore:unclosed <socket.socket:ResourceWarning"]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+# E = pycodestyle
+# F = Pyflakes
+# I = isort
+# UP = pyupgrade
