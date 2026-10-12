@@ -1,52 +1,66 @@
-# 🍇 GraphX
+# GraphX
 
-Here are some PoCs I did to learn more about the GraphX API for Apache Spark.  
-I did **two different exercises**, they are...
+Two GraphFrames challenges on small graphs: distances per node, and the total cost of a League of Legends item (Pregel).
 
-## Calculate the Distances
+## How to run
 
-Our challenge here is to **calculate the sum of `distances (edges) * multipliers (vertex)` for each node in the tree**.
+Needs JDK 21, [uv](https://docs.astral.sh/uv/) and internet access (the GraphFrames jar is fetched from Maven on the first run).
+
+```bash
+cd snippets/graphx/
+uv run python distances.py
+uv run python lol_items.py
+```
+
+Each script asserts its own expected result.
+
+## Example
+
+### Distances
+
+For each node, the sum of `distance (edge) * multiplier (vertex)`. Edges count on the node they arrive at.
 
 ![basic-graph](.docs/basic-graph.png)
 
-So, for example, the **expected** output for the **Node 4 (purple)** is 20 👇
-
-```bash
-Node ID → 4
-Node Multiplier → 1.0
-Edges → 12.0, 8.0
-
-Expected Result = [12.0 * 1.0 + 8.0 * 1.0] = 20
+```text
++---+----------+--------------+
+| id|multiplier|total_distance|
++---+----------+--------------+
+|  1|       1.0|           0.0|
+|  2|       1.5|           7.5|
+|  3|       2.0|          14.0|
+|  4|       1.0|          20.0|
++---+----------+--------------+
 ```
 
-> 📘 The code is in [this](distances.ipynb) notebook.
+Node 4: `12.0 * 1.0 + 8.0 * 1.0 = 20.0`.
 
-## LoL Items
+### LoL Items
 
-Our challenge here is to **calculate the total price** of each item in the graph.
+`total_cost = cost + sum(component total_cost * amount)`. A "Basic" item has no components, so its `total_cost` is its `cost`.
 
 ![lol-graph](.docs/lol-graph.png)
 
-**Business Rules**  
-If the item rarity is "Basic" then the `total_cost` is the item `cost`.  
-Otherwise, the `total_cost` is the **sum** of the preivious items `total_cost * amount`..
+```text
++-------------+---------+----+-----------------+-------------------+----------+
+|id           |rarity   |cost|_pregel_is_active|previous_items_cost|total_cost|
++-------------+---------+----+-----------------+-------------------+----------+
+|Ruby Crystal |Basic    |400 |true             |NULL               |400       |
+|Cloth Armor  |Basic    |300 |true             |NULL               |300       |
+|Sunfire Aegis|Legendary|900 |true             |1800               |2700      |
+|Bami's Cinder|Epic     |200 |true             |800                |1000      |
+|Chain Vest   |Epic     |500 |true             |300                |800       |
++-------------+---------+----+-----------------+-------------------+----------+
+```
 
-> 💡 This challenge uses the "[Sunfire Aegis]" item.  
-> 📘 The code is in [this](lol-items.ipynb) notebook.
+The diagrams are editable in [`graphs.excalidraw`](.docs/graphs.excalidraw).
 
-[Sunfire Aegis]: https://leagueoflegends.fandom.com/wiki/Sunfire_Aegis
+## References
 
-## Other Links
-
-Articles that helped me to solve the next challenges.
-
+- [GraphFrames: Pregel](https://graphframes.io/04-user-guide/10-pregel.html)
+- [GraphFrames: Python API](https://graphframes.io/api/python/)
 - [Apache Spark: GraphX Programming Guide](https://spark.apache.org/docs/latest/graphx-programming-guide.html)
-- [Medium - GraphX Pregel](https://towardsdatascience.com/spark-graphx-pregel-its-not-so-complex-as-it-sounds-d196da246c73)
-- [Medium - Getting Started with GraphX](https://medium.com/data-hackers/introdu%C3%A7%C3%A3o-ao-spark-graphx-e-graphframes-9b10089f2e7f)
-- [Geeks 4 Geeks - Pure Python Example](https://www.geeksforgeeks.org/calculate-sum-of-all-nodes-present-in-a-level-for-each-level-of-a-tree/)
-- [Stanford - GraphX + Pregel](https://stanford.edu/~rezab/classes/cme323/S16/notes/Lecture16/Pregel_GraphX.pdf)
-- [GraphX + Pregel - Official Docs](https://graphframes.github.io/graphframes/docs/_site/api/python/graphframes.lib.html#graphframes.lib.Pregel)
-
-<br/>
-
-🧙‍♂️ _"If in doubt Meriadoc, always follow your nose." - Gandalf_
+- [Medium: Introdução ao Spark GraphX e GraphFrames](https://medium.com/data-hackers/introdu%C3%A7%C3%A3o-ao-spark-graphx-e-graphframes-9b10089f2e7f)
+- [Stanford: GraphX + Pregel](https://stanford.edu/~rezab/classes/cme323/S16/notes/Lecture16/Pregel_GraphX.pdf)
+- [GeeksforGeeks: sum of nodes per level of a tree](https://www.geeksforgeeks.org/calculate-sum-of-all-nodes-present-in-a-level-for-each-level-of-a-tree/)
+- [LoL Wiki: Sunfire Aegis](https://leagueoflegends.fandom.com/wiki/Sunfire_Aegis)

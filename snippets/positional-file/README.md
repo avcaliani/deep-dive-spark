@@ -1,36 +1,31 @@
-# 🥑 Positional File
+# Positional File
 
-![#](https://img.shields.io/badge/apache--spark-3.0.x-darkorange.svg)
+Writes a single fixed-width (positional) file from a CSV with Spark Shell.
 
-This is an example of writing a single positinal file.  
-In this example I'm using a [Avocado Prices](https://www.kaggle.com/neuromusic/avocado-prices) dataset, so thanks to [Justin Kiggins](https://www.kaggle.com/neuromusic) for sharing his dataset.
+## How to run
 
-The important thing here is the code, but if you want to execute it there is a `run.sh` to help you out.
+Needs Spark 3.0.x (`spark-shell`) on your machine.  
+The dataset is not versioned: download [Avocado Prices](https://www.kaggle.com/neuromusic/avocado-prices) from Kaggle and save it as `data/avocado.csv`.
 
-```sh
-# from this folder, the data path is relative
+```bash
+cd snippets/positional-file/
 bash -x run.sh
 ```
 
-### Positional File Contract
+The data path is relative, so run it from this folder. The result is `data/AVOCADO.TXT`.
 
-| Order | Field         | Type     | Size   | Observation                         |
-|:-----:|---------------|----------|--------|-------------------------------------|
-| 1     | Date          | `string` | `08`   | Date Pattern 👉 `yyyyMMdd`.         |
-| 2     | Average Price | `float`  | `12`   | The last 2 digits are the decimals. |
-| 3     | Total Volume  | `int`    | `10`   |                                     |
-| 4     | Region        | `string` | `25`   | Must be in upper case.              |
+## Example
 
-> 💡 Characters per line = `55`.
+Contract (55 characters per line). Strings are padded with spaces, numbers with zeros.
 
-For extra characters fill:
+| Order | Field         | Type     | Size | Observation                         |
+|:-----:|---------------|----------|------|-------------------------------------|
+| 1     | Date          | `string` | `08` | Date pattern `yyyyMMdd`.            |
+| 2     | Average Price | `float`  | `12` | The last 2 digits are the decimals. |
+| 3     | Total Volume  | `int`    | `10` |                                     |
+| 4     | Region        | `string` | `25` | Must be in upper case.              |
 
-- `strings` with "whitespace" (` `).
-- `float` and `int` with "zero" (`0`).
-
-#### Data x File Example
-
-Input data example.
+Input record and expected line:
 
 ```yml
 date: "2020-09-01"
@@ -39,35 +34,21 @@ total_volume: 1050
 region: "Brazil"
 ```
 
-Expected output file.
-
 ```text
 202009010000000011500000001050                   BRAZIL
 ```
 
-### Output
+Output check (the missing line is the CSV header):
 
 ```bash
-wc -l data/avocado.csv 
-# 18250 data/avocado.csv
-
-wc -l data/AVOCADO.TXT
-# 18249 data/AVOCADO.TXT
-# 1 line is missing, but it is the CSV header.
-
-head data/AVOCADO.TXT
+wc -l data/avocado.csv   # 18250
+wc -l data/AVOCADO.TXT   # 18249
+head -3 data/AVOCADO.TXT
 # 201501040000000001220004087328                   ALBANY
 # 201501040000000001790000137395                   ALBANY
 # 201501040000000000100043502149                  ATLANTA
-# 201501040000000001760000384669                  ATLANTA
-# 201501040000000001080078802506      BALTIMOREWASHINGTON
-# 201501040000000001290001913728      BALTIMOREWASHINGTON
-# 201501040000000001010008003432                    BOISE
-# 201501040000000001640000150512                    BOISE
-# 201501040000000001020004917380                   BOSTON
-# 201501040000000001830000219213                   BOSTON
 ```
 
-### Further Help
+## References
 
-If you want to execute this code locally you have to download the dataset from [Kaggle](https://www.kaggle.com/neuromusic/avocado-prices) and then add the file into the folder `./data/`.
+- [Kaggle: Avocado Prices](https://www.kaggle.com/neuromusic/avocado-prices), thanks to [Justin Kiggins](https://www.kaggle.com/neuromusic) for sharing it
