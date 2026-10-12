@@ -38,9 +38,12 @@ Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs
  - test: `uv run pytest`
  - lint: `uv run ruff check .`
 
-**snippets** (isolated experiments) are run one by one, see `snippets/README.md` (Kaggle datasets are not versioned).
+**snippets** (isolated experiments) are run one by one, see `snippets/README.md` and each folder's README (Kaggle datasets are not versioned).
+ - `graphx`, `high-order-functions`: each is its own uv project, run `uv run ...` from the folder
+ - `positional-file` (Scala `spark-shell`) and `liquid-clustering` (Databricks notebook) are not Python
 
-Python commands only inside the uv environment or the containers.
+**NEVER run Python or PySpark commands outside the virtual env** (`python`, `pip`, `pytest`, `ruff`, `spark-submit`, `jupyter`).
+Always use `uv run ...` from the poc or snippet folder, or the poc containers. This applies to the snippets too.
 
 ## Keep Docs Updated
 
