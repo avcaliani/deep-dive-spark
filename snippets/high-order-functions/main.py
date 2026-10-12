@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 from contextlib import contextmanager
 
 from pyspark.sql import Column, DataFrame, SparkSession
@@ -5,8 +6,8 @@ from pyspark.sql import functions as f
 
 
 @contextmanager
-def spark_session() -> SparkSession:
-    spark = SparkSession.builder.appName(f"app").getOrCreate()
+def spark_session() -> Iterator[SparkSession]:
+    spark = SparkSession.builder.appName("high-order-functions").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     yield spark
     spark.stop()
