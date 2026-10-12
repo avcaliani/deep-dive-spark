@@ -16,8 +16,9 @@ Be terse.
 ├── .github/                pr + issue templates
 ├── snippets/               isolated spark experiments, one folder each
 └── pocs/                   self-contained pipelines, own Dockerfile + README
+    ├── README.md           the Kwik-E-Mart universe and the inspiration (read this first)
     ├── kwik-e-chain/       scala 2.13, sbt, delta: validate + route DonutCoin transactions
-    └── kwik-e-mart/       pyspark, uv, delta: clean + type Kwik-E-Mart daily sales
+    └── kwik-e-mart/        pyspark, uv, delta: clean + type Kwik-E-Mart daily sales
 ```
 
 Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs.

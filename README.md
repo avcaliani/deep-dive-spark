@@ -21,12 +21,14 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 ├── .github/                    pr + issue templates
 ├── snippets/                   isolated spark experiments, one folder each
 └── pocs/
+    ├── README.md               the Kwik-E-Mart universe and the inspiration
     ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions
-    └── kwik-e-mart/           pyspark, uv, delta: clean + type Kwik-E-Mart daily sales
+    └── kwik-e-mart/            pyspark, uv, delta: clean + type Kwik-E-Mart daily sales
 ```
 
 ## How to run
 
+Both pocs live in the same Kwik-E-Mart universe, see [`pocs/README.md`](pocs/README.md).  
 Each poc is self-contained and runs in Docker, see its README:
 
 - [`pocs/kwik-e-chain`](pocs/kwik-e-chain/README.md)
