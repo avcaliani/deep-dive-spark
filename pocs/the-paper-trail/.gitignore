@@ -1,0 +1,26 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environments
+.env
+.venv/
+
+# Local Spark artifacts (default warehouse dir when none is configured)
+spark-warehouse/
+
+# IDE's
+.idea
+.vscode
+
+# macOS
+.DS_Store
+
+# Dev Stuff
+*.csv
+*.log
+
+# Data (generated locally, gitignored — uv.lock is what's committed)
+data/bronze/
+data/silver/

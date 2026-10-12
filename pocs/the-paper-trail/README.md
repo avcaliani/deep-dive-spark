@@ -1,0 +1,71 @@
+<div align="center">
+
+![The Paper Trail](.docs/logo.svg)
+
+![License](https://img.shields.io/github/license/avcaliani/deep-dive-pyspark?logo=apache&color=lightseagreen)
+![Java](https://img.shields.io/badge/Java-21-FF7800?logo=openjdk&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![uv](https://img.shields.io/badge/uv-0.11.29-DE5FE9?logo=astral&logoColor=white)
+![Spark](https://img.shields.io/badge/Apache--Spark-4.1.1-E25A1C?logo=apachespark&logoColor=white)
+![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.2.0-00ADD8)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+
+In this project you will find some stuff that I've done while learning about working with PySpark.  
+The dataset I'm using is a locally-generated, dependency-free mock of Dunder Mifflin's daily paper sales.  
+Yes, [The Office](https://en.wikipedia.org/wiki/The_Office_(American_TV_series)), I'm a big fan \o/
+
+</div>
+
+## Quick Start
+
+Java, Spark, uv, and all Python dependencies are baked into the image at build time.  
+No manual install step after `up`.
+
+```bash
+# Build the image
+docker compose build
+
+# Start the container
+docker compose up -d
+
+# Generate the mock sales dataset
+docker compose exec app scripts/generate_sales_data.py
+
+# Run the PySpark job
+docker compose exec app scripts/run.sh
+
+# When you're done
+docker compose down
+```
+
+![#output](.docs/output.gif)
+
+<details>
+<summary>Run locally (without Docker) 👇</summary>
+
+Requires Python 3.12, JDK 21, and [uv](https://docs.astral.sh/uv/) installed locally.
+
+```bash
+# Install dependencies
+uv sync
+
+# Generate the mock sales dataset
+DATA_PATH="$(pwd)/data" scripts/generate_sales_data.py
+
+# Run the PySpark job (must be an absolute path -- Delta's path-based table
+# addressing breaks on a leading ./ in the path)
+DATA_PATH="$(pwd)/data" scripts/run.sh
+
+# Check the Files
+tree ./data -L 4
+
+# Run the tests
+uv run pytest
+
+# Lint
+uv run ruff check .
+```
+
+</details>
+
+PS.: This is an unofficial fan project for learning PySpark, not affiliated with or endorsed by NBC/Universal.
