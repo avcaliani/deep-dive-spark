@@ -1,6 +1,6 @@
 <img src="../.docs/spark-logo.svg" align="right" height="64px"/>
 
-# Snippets ⚡
+# Snippets
 
 Isolated Spark experiments, one folder each. They share nothing and can be run in any order.  
 Datasets from Kaggle are not versioned, each experiment says where to put them.  

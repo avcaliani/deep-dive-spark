@@ -1,6 +1,6 @@
 <img src=".docs/spark-logo.svg" align="right" height="64px"/>
 
-# Spark Lab ⚡
+# Spark Lab
 
 ![Spark](https://img.shields.io/badge/Apache--Spark-4.1.1-E25A1C?style=flat&logo=apachespark&logoColor=white)
 ![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.3.1-00ADD8?style=flat)
