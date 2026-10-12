@@ -14,7 +14,11 @@ Notes:
 Run: uv run python distances.py
 """
 from graphframes import GraphFrame
-from pyspark.sql import SparkSession
+from graphframes.lib import AggregateMessages as AM
+from pyspark.sql import DataFrame, SparkSession
+from pyspark.sql import functions as f
+
+EXPECTED_DISTANCES = {1: 0.0, 2: 7.5, 3: 14.0, 4: 20.0}
 
 
 def spark_session() -> SparkSession:
@@ -39,11 +43,30 @@ def build_graph(spark: SparkSession) -> GraphFrame:
     return GraphFrame(vertices, edges)
 
 
+def calculate_distances(graph: GraphFrame) -> DataFrame:
+    messages = graph.aggregateMessages(
+        f.sum(AM.msg).alias('total_distance'),
+        sendToDst=AM.edge['distance'] * AM.dst['multiplier'],
+    )
+    return (
+        graph.vertices
+        .join(messages, on='id', how='left')
+        .withColumn('total_distance', f.coalesce('total_distance', f.lit(0.0)))
+        .orderBy('id')
+    )
+
+
 def main() -> None:
     spark = spark_session()
     graph = build_graph(spark)
     graph.vertices.show()
     graph.edges.show()
+
+    result = calculate_distances(graph)
+    result.show()
+
+    distances = {row['id']: row['total_distance'] for row in result.collect()}
+    assert distances == EXPECTED_DISTANCES, f'unexpected distances: {distances}'
     spark.stop()
 
 
