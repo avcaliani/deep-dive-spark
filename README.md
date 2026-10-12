@@ -1,14 +1,44 @@
-# Lab Spark
+<img src=".docs/spark-logo.svg" align="right" height="64px"/>
 
-Personal Apache Spark learning sandbox.
+# Spark Lab ⚡
+
+![Spark](https://img.shields.io/badge/Apache--Spark-4.1.1-E25A1C?style=flat&logo=apachespark&logoColor=white)
+![Delta Lake](https://img.shields.io/badge/Delta_Lake-4.3.1-00ADD8?style=flat)
+![Scala](https://img.shields.io/badge/Scala-2.13-DC322F?style=flat&logo=scala&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat&logo=opensourceinitiative&logoColor=white)
+
+Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and PySpark.
 
 ## Structure
 
 ```text
 .
-├── .github/            pr and issue templates
+├── .claude/
+│   └── rules/                  spark concepts + scala/pyspark conventions
+├── .docs/                      readme assets
+├── .github/                    pr + issue templates
+├── snippets/                   quick experiments + exercises (exNN_*)
 └── pocs/
-    └── kwik-e-chain/   scala, sbt, delta lake (DonutCoin transactions)
+    ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions
+    └── the-paper-trail/        pyspark, uv, delta: clean + type daily paper sales
 ```
 
-Each poc is self-contained, see its own README.
+## How to run
+
+Each poc is self-contained and runs in Docker, see its README:
+
+- [`pocs/kwik-e-chain`](pocs/kwik-e-chain/README.md)
+- [`pocs/the-paper-trail`](pocs/the-paper-trail/README.md)
+
+Snippets are run per exercise, see [`snippets/README.md`](snippets/README.md).
+
+---
+
+[Apache Spark] / [Delta Lake] / [sbt] / [uv]
+
+[Apache Spark]: https://spark.apache.org
+[Delta Lake]: https://delta.io
+[sbt]: https://www.scala-sbt.org
+[uv]: https://docs.astral.sh/uv/
