@@ -9,4 +9,4 @@ uv run spark-submit --master local \
   --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
   --conf "spark.sql.debug.maxToStringFields=100" \
   --driver-java-options "-Dlog4j2.configurationFile=file:resources/log4j.properties" \
-  'src/main.py' -p dunder-mifflin-sales "$@"
+  'src/main.py' -p kwik-e-mart-sales "$@"

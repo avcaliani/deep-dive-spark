@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Generates a mock "Dunder Mifflin daily sales"
+# Generates a mock "Kwik-E-Mart daily sales"
 #
 # Env vars:
 #   NUM_ROWS   total row count across all files     (default 1000000)
@@ -83,7 +83,7 @@ def main() -> None:
     num_files = int(os.environ.get('NUM_FILES', 10))
     data_path = os.environ.get('DATA_PATH', '/data')
 
-    output_dir = Path(data_path) / 'bronze' / 'dunder-mifflin' / 'sales'
+    output_dir = Path(data_path) / 'bronze' / 'kwik-e-mart' / 'sales'
     output_dir.mkdir(parents=True, exist_ok=True)
 
     base_rows, extra_rows = divmod(num_rows, num_files)

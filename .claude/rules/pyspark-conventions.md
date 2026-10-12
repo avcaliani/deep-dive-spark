@@ -1,10 +1,10 @@
 ---
 paths:
-  - "pocs/the-paper-trail/**/*.py"
+  - "pocs/kwik-e-mart/**/*.py"
   - "snippets/**/*.py"
 ---
 
-# PySpark Conventions (pocs/the-paper-trail and snippets)
+# PySpark Conventions (pocs/kwik-e-mart and snippets)
 
 ## NEVER run commands outside the virtual env
 
@@ -13,7 +13,7 @@ Every Python or PySpark command runs through uv (or the poc container). Never us
 
 ```bash
 # right
-cd pocs/the-paper-trail && uv run pytest
+cd pocs/kwik-e-mart && uv run pytest
 cd snippets/graphx && uv run python distances.py
 cd snippets/high-order-functions && uv run spark-submit main.py
 
@@ -28,7 +28,7 @@ spark-submit main.py
 - `snippets/positional-file` (Scala) and `snippets/liquid-clustering` (Databricks) are not Python.
 - Spark needs JDK 21 on the machine. Without it, use the poc container instead of installing anything globally.
 
-## Pipelines (pocs/the-paper-trail)
+## Pipelines (pocs/kwik-e-mart)
 
 - A pipeline subclasses `Pipeline` (`pipelines/base.py`) and implements `run(self) -> None`.
 - Register it in `pipelines/__init__.py` (`PIPELINES`), the key is the CLI name (`-p <name>`).
@@ -45,7 +45,7 @@ spark-submit main.py
 
 ## Style
 
-- Single quotes, line length 120, ruff rules `E, F, I, UP` (see `pocs/the-paper-trail/pyproject.toml`).
+- Single quotes, line length 120, ruff rules `E, F, I, UP` (see `pocs/kwik-e-mart/pyproject.toml`).
 - Tests in `tests/` with the shared Spark fixture in `conftest.py`; `src` is on `pythonpath`.
 - Snippet scripts: a module docstring with the problem, the run command and any diagram in `.docs/`;
   small typed functions (`spark_session`, `build_*`, `calculate_*`, `main`); self-checking with an `assert`

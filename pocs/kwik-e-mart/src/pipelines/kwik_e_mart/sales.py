@@ -6,10 +6,10 @@ from pyspark.sql import functions as f
 from pipelines.base import Pipeline
 from utils import file, log
 
-TAG = 'Dunder Mifflin Sales'
+TAG = 'Kwik-E-Mart Sales'
 DATA_PATH = env.get('DATA_PATH', '/data')
-BRONZE_PATH = f'{DATA_PATH}/bronze/dunder-mifflin/sales'
-OUTPUT_PATH = f'{DATA_PATH}/silver/dunder-mifflin/sales'
+BRONZE_PATH = f'{DATA_PATH}/bronze/kwik-e-mart/sales'
+OUTPUT_PATH = f'{DATA_PATH}/silver/kwik-e-mart/sales'
 CLUSTER_BY = ['branch', 'date']
 
 

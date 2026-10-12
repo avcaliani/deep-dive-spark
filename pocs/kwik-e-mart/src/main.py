@@ -9,7 +9,7 @@ from utils import log
 def spark_session() -> SparkSession:
     return SparkSession \
         .builder \
-        .appName('the-paper-trail') \
+        .appName('kwik-e-mart') \
         .getOrCreate()
 
 
