@@ -2,8 +2,8 @@
 
 # Snippets ⚡
 
-Small Spark code snippets, one folder per snippet.  
-Datasets from Kaggle are not versioned, each snippet README says where to put them.  
+Isolated Spark experiments, one folder each. They share nothing and can be run in any order.  
+Datasets from Kaggle are not versioned, each experiment says where to put them.  
 Run Python commands inside an activated virtualenv.
 
 ### GraphX
