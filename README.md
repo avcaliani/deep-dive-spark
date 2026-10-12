@@ -19,7 +19,7 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 │   └── rules/                  spark concepts + scala/pyspark conventions
 ├── .docs/                      readme assets
 ├── .github/                    pr + issue templates
-├── snippets/                   quick experiments + exercises (exNN_*)
+├── snippets/                   spark code snippets, one folder each
 └── pocs/
     ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions
     └── the-paper-trail/        pyspark, uv, delta: clean + type daily paper sales
@@ -32,7 +32,7 @@ Each poc is self-contained and runs in Docker, see its README:
 - [`pocs/kwik-e-chain`](pocs/kwik-e-chain/README.md)
 - [`pocs/the-paper-trail`](pocs/the-paper-trail/README.md)
 
-Snippets are run per exercise, see [`snippets/README.md`](snippets/README.md).
+Snippets are run one by one, see [`snippets/README.md`](snippets/README.md).
 
 ---
 
