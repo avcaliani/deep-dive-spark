@@ -14,7 +14,7 @@ Be terse.
 ├── .claude/rules/          spark concepts + scala/pyspark conventions
 ├── .docs/                  root readme assets (spark logo)
 ├── .github/                pr + issue templates
-├── snippets/               spark code snippets, one folder each
+├── snippets/               isolated spark experiments, one folder each
 └── pocs/                   self-contained pipelines, own Dockerfile + README
     ├── kwik-e-chain/       scala 2.13, sbt, delta: validate + route DonutCoin transactions
     └── the-paper-trail/    pyspark, uv, delta: clean + type daily paper sales
@@ -38,7 +38,7 @@ Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs
  - test: `uv run pytest`
  - lint: `uv run ruff check .`
 
-**snippets** are run one by one, see `snippets/README.md` (Kaggle datasets are not versioned).
+**snippets** (isolated experiments) are run one by one, see `snippets/README.md` (Kaggle datasets are not versioned).
 
 Python commands only inside the uv environment or the containers.
 
