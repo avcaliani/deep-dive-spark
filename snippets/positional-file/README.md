@@ -9,10 +9,16 @@ The dataset is not versioned: download [Avocado Prices](https://www.kaggle.com/n
 
 ```bash
 cd snippets/positional-file/
-bash -x run.sh
+
+# Spark writes a folder (data/avocado/) with one part file, so rename it to a single file
+spark-shell -I main.scala \
+  && rm -f data/*.txt data/avocado/*.crc \
+  && mv data/avocado/*.txt data/AVOCADO.TXT \
+  && rm -rf data/avocado
 ```
 
-The data path is relative, so run it from this folder. The result is `data/AVOCADO.TXT`.
+The data path is relative, so run it from this folder. The result is `data/AVOCADO.TXT`.  
+The `rm` commands only touch `.txt` files in `data/` and the `data/avocado/` output folder.
 
 ## Example
 
