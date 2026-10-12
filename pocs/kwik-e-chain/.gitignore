@@ -5,23 +5,7 @@ tmp
 *.class
 *.log
 spark-warehouse/
-metals.sbt
 
-# Data (generated locally / Delta output — gitignored)
+# Data (generated locally / Delta output, gitignored)
 data/bronze/
 data/silver/
-
-# IDEA
-.idea
-*.iml
-
-# Metals / Bloop / BSP (Scala Metals extension)
-.bloop
-.metals
-.bsp
-
-# VS Code
-.vscode
-
-# OS
-*.DS_Store

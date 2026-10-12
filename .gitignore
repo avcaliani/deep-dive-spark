@@ -1,0 +1,25 @@
+# Claude (local only)
+.claude/worktrees/
+.claude/settings.local.json
+.claude/.cc-writes/
+
+# Tooling caches (auto-created by editors)
+.lsp/
+.clj-kondo/
+.calva/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.cursor/
+
+# Metals / Bloop / BSP (Scala Metals extension)
+.bloop/
+.metals/
+.bsp/
+metals.sbt
+
+# OS
+.DS_Store
+Thumbs.db
