@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.."
 
 uv run spark-submit --master local \
   --files resources/log4j.properties \
-  --packages "io.delta:delta-spark_2.13:4.2.0" \
+  --packages "io.delta:delta-spark_2.13:4.3.1" \
   --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
   --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
   --conf "spark.sql.debug.maxToStringFields=100" \
