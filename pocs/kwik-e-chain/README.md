@@ -1,6 +1,6 @@
 # Kwik-E-Chain
 
-> Part of the [pocs](../README.md), set in Apu's Kwik-E-Mart. See there for the inspiration and the other poc.
+> Part of the [Kwik-E-Mart Universe](../README.md). See there for the inspiration and the other poc.
 
 ![License](https://img.shields.io/github/license/avcaliani/lab-spark?color=green)
 ![Java](https://img.shields.io/badge/Java-21-FF7800?logo=openjdk&logoColor=white)

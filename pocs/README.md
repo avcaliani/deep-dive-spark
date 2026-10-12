@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://static.wikia.nocookie.net/simpsons/images/d/da/800px-Kwik-E-Mart.png/revision/latest?cb=20170101230443" alt="Kwik-E-Mart" height="160px"/>
+# Kwik-E-Mart Universe
 
-# Pocs
+<img src="https://static.wikia.nocookie.net/simpsons/images/d/da/800px-Kwik-E-Mart.png/revision/latest?cb=20170101230443" alt="Kwik-E-Mart" width="720px"/>
 
 Self-contained Spark pipelines, one folder each, all set in Apu's Kwik-E-Mart.
 
