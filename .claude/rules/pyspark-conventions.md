@@ -1,58 +1,49 @@
 ---
 paths:
-  - "pocs/kwik-e-mart/**/*.py"
-  - "snippets/**/*.py"
+  - "**/*.py"
 ---
 
-# PySpark Conventions (pocs/kwik-e-mart and snippets)
+# PySpark Conventions
+
+Apply to any PySpark code in this repo, whatever the project.
 
 ## NEVER run commands outside the virtual env
 
-Every Python or PySpark command runs through uv (or the poc container). Never use bare `python`,
-`python3`, `pip`, `pytest`, `ruff`, `spark-submit`, `pyspark` or `jupyter`.
+Every Python or PySpark command runs through uv, from the folder that owns the `pyproject.toml`,
+or inside the project's container. Never use bare `python`, `python3`, `pip`, `pytest`, `ruff`,
+`spark-submit`, `pyspark` or `jupyter`.
 
 ```bash
 # right
-cd pocs/kwik-e-mart && uv run pytest
-cd snippets/graphx && uv run python distances.py
-cd snippets/high-order-functions && uv run spark-submit main.py
+cd <project> && uv run pytest
+cd <project> && uv run python main.py
+cd <project> && uv run spark-submit main.py
 
 # wrong
-python distances.py
+python main.py
 pip install pyspark
 spark-submit main.py
 ```
 
-- Each snippet with Python code is its own uv project (`pyproject.toml`, `uv.lock`, `.python-version`).
-  Add dependencies with `uv add`, pinned to exact versions, never with `pip install`.
-- `snippets/positional-file` (Scala) and `snippets/liquid-clustering` (Databricks) are not Python.
-- Spark needs JDK 21 on the machine. Without it, use the poc container instead of installing anything globally.
-
-## Pipelines (pocs/kwik-e-mart)
-
-- A pipeline subclasses `Pipeline` (`pipelines/base.py`) and implements `run(self) -> None`.
-- Register it in `pipelines/__init__.py` (`PIPELINES`), the key is the CLI name (`-p <name>`).
-- Keep the transform logic in `@classmethod`s (`rename_cols`, `parse_cols`, `data_quality`) chained by `process`,
-  so tests call them without a full job.
-- Paths come from `DATA_PATH` (env), never hard-coded.
+- Every Python project is its own uv project (`pyproject.toml`, `uv.lock`, `.python-version`). Start new ones with `uv init`.
+- Add dependencies with `uv add`, pinned to exact versions. Never `pip install`.
+- Spark needs JDK 21 on the machine. Without it, use the project's container instead of installing anything globally.
+- Keep `pyspark` and `delta-spark` aligned with the repo stack (see `AGENTS.md`).
+- Libraries can under-declare their dependencies. If an import fails in the venv, `uv add` the missing package
+  instead of installing it anywhere else.
 
 ## DataFrame code
 
 - `from pyspark.sql import functions as f`, then `f.col(...)`.
-- One small method or function per concern, each takes and returns a DataFrame.
-- Cast and parse explicitly (`try_to_date`, `cast('long')`), never rely on inference for silver.
-- Log through `utils.log` in the poc, not `print`. Snippets may `print` or `show()` their results.
+- One small function per concern, taking and returning a DataFrame, so each can be tested alone and chained with `.transform`.
+- Cast and parse explicitly (`try_to_date`, `cast('long')`), never rely on schema inference for curated data.
+- Paths and settings come from arguments or environment variables, never hard-coded.
+- Build the `SparkSession` in one `spark_session()` function and stop it at the end.
 
-## Style
+## Style and tests
 
-- Single quotes, line length 120, ruff rules `E, F, I, UP` (see `pocs/kwik-e-mart/pyproject.toml`).
-- Tests in `tests/` with the shared Spark fixture in `conftest.py`; `src` is on `pythonpath`.
-- Snippet scripts: a module docstring with the problem, the run command and any diagram in `.docs/`;
-  small typed functions (`spark_session`, `build_*`, `calculate_*`, `main`); self-checking with an `assert`
-  on the expected result when there is one.
-
-## GraphFrames notes (snippets/graphx)
-
-- Python package `graphframes-py` plus the jar `io.graphframes:graphframes-spark4_2.13` through `spark.jars.packages`.
-- `graphframes-py` does not declare `numpy` and `typing-extensions`, so the project pins them itself.
-- Since GraphFrames 0.12, Pregel messages only see the edge columns declared with `required_edge_columns`.
+- Type hints on every function, small functions, `main()` behind `if __name__ == '__main__':`.
+- Follow the ruff config in the project's `pyproject.toml` and check with `uv run ruff check .`.
+- Tests use a session-scoped local `SparkSession` fixture (`conftest.py`) and `pyspark.testing.assertDataFrameEqual`.
+  Test the transform functions on small in-memory DataFrames, not the full job.
+- Log with the project's logger when it has one. `print` and `show()` are fine in throwaway scripts.

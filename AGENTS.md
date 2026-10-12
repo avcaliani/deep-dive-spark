@@ -44,7 +44,7 @@ Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs
  - `positional-file` (Scala `spark-shell`) and `liquid-clustering` (Databricks notebook) are not Python
 
 **NEVER run Python or PySpark commands outside the virtual env** (`python`, `pip`, `pytest`, `ruff`, `spark-submit`, `jupyter`).
-Always use `uv run ...` from the poc or snippet folder, or the poc containers. This applies to the snippets too.
+Always use `uv run ...` from the folder that owns the `pyproject.toml`, or the project's container. This applies to every PySpark project here, whatever it is.
 
 ## Keep Docs Updated
 
