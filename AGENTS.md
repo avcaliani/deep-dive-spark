@@ -1,24 +1,24 @@
 ## Who & Why
 
-Python-first data engineer (PySpark, Airflow) using this repo as a Spark learning lab, in Scala and in PySpark.  
-Prioritize clarity and teaching over cleverness.
+Spark learning lab (Scala and PySpark) for a Python-first data engineer.
 
-When explaining Scala: assume strong PySpark intuition, little Scala syntax.
-Anchor explanations to PySpark analogues.
-Be terse.
+Prioritize clarity over cleverness. Be terse.
+
+For Scala: assume strong PySpark intuition, little Scala syntax.
+Anchor to PySpark analogues.
 
 ## Repo Layout
 
-Read [`README.md`](README.md) first, it has the file tree.
-The pocs share one universe, explained in [`pocs/README.md`](pocs/README.md).
-Every poc and snippet has its own README with how to run it, except `snippets/scripts` and `snippets/notebooks` (documented in `snippets/README.md`).
+Read [`README.md`](README.md) first (file tree), then [`pocs/README.md`](pocs/README.md) (shared universe).
 
-Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1. Keep versions aligned across pocs.
+Each poc and snippet has its own README, except `snippets/scripts` and `snippets/notebooks` (see `snippets/README.md`).
 
-**NEVER run Python or PySpark commands outside the virtual env** (`python`, `pip`, `pytest`, `ruff`, `spark-submit`, `jupyter`).
-Always use `uv run ...` from the folder that owns the `pyproject.toml` (for snippets, `snippets/` or any folder below it), or the project's container. This applies to every PySpark project here, whatever it is.
+Stack: Java 21, Spark 4.1.1, Delta Lake 4.3.1.
+Keep versions aligned across pocs.
+
+**NEVER run Python or PySpark commands outside the virtual env.**
+Use `uv run ...` from the folder that owns the `pyproject.toml` (for snippets, `snippets/` or below), or the project's container.
 
 ## Keep Docs Updated
 
-During your work, if you notice incorrect or outdated information in Markdown files
-or code comments and docs, alert the user and suggest the update.
+If you spot incorrect or outdated docs or comments, alert the user and suggest the fix.
