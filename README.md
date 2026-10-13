@@ -19,7 +19,7 @@ Personal [Apache Spark](https://spark.apache.org) learning sandbox, in Scala and
 │   └── rules/                  spark concepts + scala/pyspark conventions
 ├── .docs/                      readme assets
 ├── .github/                    pr + issue templates
-├── snippets/                   isolated spark experiments, one folder each
+├── snippets/                   isolated spark experiments (scripts, notebooks, graphx)
 └── pocs/
     ├── README.md               the Kwik-E-Mart universe and the inspiration
     ├── kwik-e-chain/           scala, sbt, delta: validate + route DonutCoin transactions

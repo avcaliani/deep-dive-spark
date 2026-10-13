@@ -1,8 +1,12 @@
+import sys
 from collections.abc import Iterator
 from contextlib import contextmanager
+from pathlib import Path
 
 from pyspark.sql import Column, DataFrame, SparkSession
 from pyspark.sql import functions as f
+
+SAMPLE = Path(__file__).parent.parent / "samples" / "springfield_transactions.csv"
 
 
 @contextmanager
@@ -13,9 +17,9 @@ def spark_session() -> Iterator[SparkSession]:
     spark.stop()
 
 
-def read(spark: SparkSession) -> DataFrame:
+def read(spark: SparkSession, path: str) -> DataFrame:
     return spark.read \
-        .csv("data/raw", header=True, inferSchema=True)
+        .csv(path, header=True, inferSchema=True)
 
 
 def info(df: DataFrame, title: str) -> None:
@@ -28,10 +32,7 @@ def info(df: DataFrame, title: str) -> None:
 def pre_processing(data: DataFrame) -> DataFrame:
     return (
         data
-        .select(f.col("nameOrig").alias("name_origin"),
-                f.col("type"),
-                f.col("amount"),
-                f.col("isFraud").alias("is_fraud"))
+        .select("name_origin", "type", "amount", "is_fraud")
         .groupBy("name_origin")
         .agg(f.count("*").alias("n_transactions"),
              f.sum("is_fraud").alias("n_frauds"),
@@ -62,9 +63,10 @@ def calculate_transactions(data: DataFrame) -> DataFrame:
 
 
 if __name__ == "__main__":
+    path = sys.argv[1] if len(sys.argv) > 1 else str(SAMPLE)
     with spark_session() as ss:
 
-        df = read(ss)
+        df = read(ss, path)
         info(df, "🥩 Raw Dataset")
 
         df = pre_processing(df)
