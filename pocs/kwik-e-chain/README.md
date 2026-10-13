@@ -69,6 +69,29 @@ sbt scalafmtAll
 
 </details>
 
+<br />
+
+<details>
+<summary>Project Structure 🗂️</summary>
+
+```text
+kwik-e-chain/
+├── build.sbt
+├── Dockerfile
+├── docker-compose.yml
+├── scripts/               # data generator and run.sh
+└── src/
+    ├── main/
+    │   ├── resources/     # app and log4j2 properties
+    │   └── scala/br/avcaliani/kwikechain/
+    │       ├── Main.scala
+    │       ├── pipelines/
+    │       └── utils/
+    └── test/scala/        # specs
+```
+
+</details>
+
 ## Related Links
 
 - [Apache Spark: Official Website](https://spark.apache.org)

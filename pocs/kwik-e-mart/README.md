@@ -66,3 +66,22 @@ uv run ruff check .
 ```
 
 </details>
+
+<details>
+<summary>Project Structure 🗂️</summary>
+
+```text
+kwik-e-mart/
+├── pyproject.toml
+├── Dockerfile
+├── docker-compose.yml
+├── resources/             # log4j properties
+├── scripts/               # data generator and run.sh
+├── src/
+│   ├── main.py
+│   ├── pipelines/
+│   └── utils/
+└── tests/
+```
+
+</details>
